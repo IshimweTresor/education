@@ -6,7 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import UniversityImage from "@/components/university-image"
 
-export default function DestinationPage({ params }: { params: { slug: string } }) {
+export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  
   // This would normally come from a database or API
   const destinations = {
     "united-states": {
@@ -497,7 +499,7 @@ export default function DestinationPage({ params }: { params: { slug: string } }
     },
   }
 
-  const destination = destinations[params.slug as keyof typeof destinations]
+  const destination = destinations[slug as keyof typeof destinations]
 
   if (!destination) {
     return <div>Destination not found</div>
@@ -696,7 +698,7 @@ export default function DestinationPage({ params }: { params: { slug: string } }
                   </div>
                   <div className="mt-6">
                     <Button asChild className="w-full bg-orange-500 hover:bg-orange-600">
-                      <Link href={`/universities?country=${params.slug}`}>View All Universities</Link>
+                      <Link href={`/universities?country=${slug}`}>View All Universities</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -843,13 +845,13 @@ export default function DestinationPage({ params }: { params: { slug: string } }
               <h3 className="text-lg font-semibold mb-4">Related Resources</h3>
               <div className="space-y-3">
                 <Link
-                  href={`/programs?country=${params.slug}`}
+                  href={`/programs?country=${slug}`}
                   className="block text-sm text-orange-500 hover:underline"
                 >
                   Browse Programs in {destination.name} →
                 </Link>
                 <Link
-                  href={`/universities?country=${params.slug}`}
+                  href={`/universities?country=${slug}`}
                   className="block text-sm text-orange-500 hover:underline"
                 >
                   View Universities →

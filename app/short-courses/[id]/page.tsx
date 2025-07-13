@@ -6,10 +6,12 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ProgramImage from "@/components/program-image"
 
-export default function ShortCourseDetailsPage({ params }: { params: { id: string } }) {
+export default async function ShortCourseDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   // This would normally come from a database or API
   const course = {
-    id: params.id,
+    id: id,
     title: "Data Science Fundamentals",
     provider: "MIT Professional Education",
     duration: "8 weeks",
@@ -201,9 +203,9 @@ export default function ShortCourseDetailsPage({ params }: { params: { id: strin
       <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
         <div>
           <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-lg">
-            <ProgramImage id={Number.parseInt(params.id)} type={course.type as any} />
+            <ProgramImage id={Number.parseInt(id)} type={course.type as any} />
             <div className="absolute bottom-4 left-4">
-              <Badge className="bg-orange-500">{course.category}</Badge>
+              <Badge className="bg-orange-500 text-white">{course.category}</Badge>
             </div>
           </div>
 
@@ -317,7 +319,7 @@ export default function ShortCourseDetailsPage({ params }: { params: { id: strin
                           <h3 className="text-lg font-semibold">
                             Week {week.week}: {week.title}
                           </h3>
-                          <Badge variant="outline" className="bg-gray-100">
+                          <Badge variant="outline" className="bg-gray-100 text-gray-700">
                             {week.duration}
                           </Badge>
                         </div>

@@ -217,12 +217,14 @@ const disciplineNames = {
   humanities: "Humanities",
 }
 
-export default function DisciplinePage({ params }: { params: { slug: string } }) {
+export default async function DisciplinePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  
   const discipline =
-    disciplineData[params.slug as keyof typeof disciplineData] ||
+    disciplineData[slug as keyof typeof disciplineData] ||
     getDefaultDisciplineData(
-      params.slug,
-      disciplineNames[params.slug as keyof typeof disciplineNames] || "Unknown Discipline",
+      slug,
+      disciplineNames[slug as keyof typeof disciplineNames] || "Unknown Discipline",
     )
 
   if (!discipline) {
@@ -353,7 +355,7 @@ export default function DisciplinePage({ params }: { params: { slug: string } })
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {discipline.relatedFields.map((field) => (
-                        <Badge key={field} variant="secondary">
+                        <Badge key={field} variant="secondary" className="text-gray-700">
                           {field}
                         </Badge>
                       ))}

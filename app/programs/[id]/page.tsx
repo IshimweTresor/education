@@ -17,10 +17,11 @@ import {
   Building,
 } from "lucide-react"
 
-export default function ProgramDetailsPage({ params }: { params: { id: string } }) {
+export default async function ProgramDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   // This would normally come from a database or API
   const program = {
-    id: params.id,
+    id: id,
     title: "Bachelor of Computer Science",
     university: "Massachusetts Institute of Technology",
     location: "Cambridge, United States",
@@ -182,7 +183,7 @@ export default function ProgramDetailsPage({ params }: { params: { id: string } 
           <div className="relative mb-8 h-[300px] w-full overflow-hidden rounded-lg">
             <Image src="/placeholder.svg?height=600&width=1200" alt={program.title} fill className="object-cover" />
             <div className="absolute bottom-4 left-4">
-              <Badge className="bg-orange-500">Top Ranked</Badge>
+              <Badge className="bg-orange-500 text-white">Top Ranked</Badge>
             </div>
           </div>
 

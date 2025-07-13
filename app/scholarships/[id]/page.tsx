@@ -5,10 +5,12 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function ScholarshipDetailsPage({ params }: { params: { id: string } }) {
+export default async function ScholarshipDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   // This would normally come from a database or API
   const scholarship = {
-    id: params.id,
+    id: id,
     title: "Global Excellence Scholarship",
     organization: "International Education Foundation",
     amount: "$25,000",
@@ -331,7 +333,7 @@ export default function ScholarshipDetailsPage({ params }: { params: { id: strin
                       <div key={index} className="border rounded-lg p-4">
                         <div className="flex justify-between items-start mb-2">
                           <h3 className="font-semibold">{criteria.criteria}</h3>
-                          <Badge className="bg-orange-500">{criteria.weight}</Badge>
+                          <Badge className="bg-orange-500 text-white">{criteria.weight}</Badge>
                         </div>
                         <p className="text-gray-600">{criteria.description}</p>
                       </div>

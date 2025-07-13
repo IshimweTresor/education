@@ -6,10 +6,12 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import StudentAvatar from "@/components/student-avatar"
 
-export default function CounselorDetailsPage({ params }: { params: { id: string } }) {
+export default async function CounselorDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  
   // This would normally come from a database or API
   const counselor = {
-    id: params.id,
+    id: id,
     name: "Dr. Sarah Johnson",
     title: "Senior Enrollment Counselor",
     specialization: "Graduate Programs, STEM Fields",
@@ -173,7 +175,7 @@ export default function CounselorDetailsPage({ params }: { params: { id: string 
         <div>
           <div className="mb-8 flex flex-col items-center text-center md:flex-row md:text-left">
             <div className="relative mb-4 h-32 w-32 overflow-hidden rounded-full md:mb-0 md:mr-6">
-              <StudentAvatar id={Number.parseInt(params.id)} />
+              <StudentAvatar id={Number.parseInt(id)} />
             </div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold mb-2">{counselor.name}</h1>
